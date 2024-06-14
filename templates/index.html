@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#weatherForm").submit(function(event) {
+        event.preventDefault();
+        var city = $("#cityInput").val();
+        $.ajax({
+          url: '/get_weather',
+          type: 'GET',
+          data: { city: city },
+          success: function(response) {
+            $("#weatherInfo").html(response.weather);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+  <h1>Weather App</h1>
+  <form id="weatherForm">
+    <input type="text" id="cityInput" placeholder="Enter City">
+    <button type="submit">Get Weather</button>
+    <div id="weatherInfo">
+      <h2 id="location"></h2>
+      <p id="temperature"></p>
+      <p id="description"></p>
+    </div>
+  </div>
+  </form>
+</body>
+</html>
